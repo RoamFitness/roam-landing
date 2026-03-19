@@ -1,272 +1,126 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Roam — Drop into anything. Sydney fitness, last-minute.</title>
-  <meta name="description" content="Last-minute fitness classes across Sydney at reduced prices. No membership. No commitment. Just show up."/>
-  <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,400;0,700;0,800;0,900;1,800&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--lime:#C8F551;--dark:#0D0D0D;--card:#141414;--border:#1E1E1E;--dim:#555;--text:#F0EDE6}
-    html{scroll-behavior:smooth}
-    body{background:var(--dark);color:var(--text);font-family:'Barlow Condensed',sans-serif;overflow-x:hidden}
-    a{color:inherit;text-decoration:none}
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 24px;display:flex;justify-content:space-between;align-items:center;background:rgba(13,13,13,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
-    .logo{font-size:22px;font-weight:900;letter-spacing:-1px}.logo span{color:var(--lime)}
-    .nav-links{display:flex;gap:8px;align-items:center}
-    .nav-btn{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:7px 14px;border-radius:20px;border:1px solid #333;background:none;color:#777;cursor:pointer;transition:all 0.2s}
-    .nav-btn:hover{border-color:var(--lime);color:var(--lime)}
-    .nav-btn.primary{background:var(--lime);color:#0D0D0D;border:none}
-    .nav-btn.primary:hover{opacity:0.88;transform:scale(1.02)}
-    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 24px 80px;position:relative;overflow:hidden}
-    .hero-bg{position:absolute;inset:0;z-index:0;background:radial-gradient(ellipse 80% 60% at 70% 40%,rgba(200,245,81,0.04) 0%,transparent 70%),radial-gradient(ellipse 50% 40% at 20% 70%,rgba(200,245,81,0.03) 0%,transparent 60%)}
-    .hero-grid{position:absolute;inset:0;z-index:0;opacity:0.025;background-image:linear-gradient(#C8F551 1px,transparent 1px),linear-gradient(90deg,#C8F551 1px,transparent 1px);background-size:60px 60px}
-    .hero-content{position:relative;z-index:1;max-width:640px}
-    .hero-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(200,245,81,0.08);border:1px solid rgba(200,245,81,0.2);border-radius:20px;padding:6px 14px;margin-bottom:24px;font-size:10px;font-weight:700;color:var(--lime);letter-spacing:2px;text-transform:uppercase;font-family:'Barlow',sans-serif}
-    .hero-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--lime);animation:pulse 2s infinite}
-    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(1.3)}}
-    h1{font-size:clamp(64px,14vw,110px);font-weight:900;line-height:0.9;letter-spacing:-4px;margin-bottom:24px}
-    h1 .accent{color:var(--lime);font-style:italic}
-    .hero-sub{font-size:17px;color:#666;font-family:'Barlow',sans-serif;font-weight:300;line-height:1.7;max-width:480px;margin-bottom:36px}
-    .hero-sub strong{color:#aaa;font-weight:500}
-    .wform{display:flex;gap:8px;max-width:460px;margin-bottom:20px}
-    .wform input{flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--text);font-family:'Barlow',sans-serif;outline:none;transition:border-color 0.2s}
-    .wform input:focus{border-color:var(--lime)}
-    .wform input::placeholder{color:#444}
-    .wform button{padding:14px 22px;border-radius:12px;border:none;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;background:var(--lime);color:#0D0D0D;white-space:nowrap;transition:all 0.18s}
-    .wform button:hover{transform:scale(1.03);opacity:0.9}
-    .wsuccess{display:none;background:rgba(200,245,81,0.08);border:1px solid rgba(200,245,81,0.3);border-radius:12px;padding:14px 18px;max-width:460px;font-size:14px;font-family:'Barlow',sans-serif;color:var(--lime)}
-    .social-proof{display:flex;align-items:center;gap:12px;font-size:12px;color:#555;font-family:'Barlow',sans-serif}
-    .avatars{display:flex}
-    .av{width:28px;height:28px;border-radius:50%;background:#1E1E1E;border:2px solid var(--dark);display:flex;align-items:center;justify-content:center;font-size:13px;margin-left:-7px}
-    .av:first-child{margin-left:0}
-    .social-proof strong{color:var(--lime)}
-    section{padding:80px 24px}
-    .slabel{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:#333;font-family:'Barlow',sans-serif;margin-bottom:16px}
-    .stitle{font-size:clamp(36px,7vw,56px);font-weight:900;line-height:1;letter-spacing:-2px;margin-bottom:16px}
-    .ssub{font-size:15px;color:#555;font-family:'Barlow',sans-serif;font-weight:300;line-height:1.7;max-width:520px}
-    .cards-section{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
-    .cards-row{display:flex;gap:12px;overflow-x:auto;padding:32px 24px;scrollbar-width:none}
-    .cards-row::-webkit-scrollbar{display:none}
-    .cc{flex-shrink:0;width:200px;background:#1a1a1a;border-radius:14px;overflow:hidden;border:1px solid #222;transition:transform 0.18s}
-    .cc:hover{transform:translateY(-3px)}
-    .ci{height:88px;display:flex;align-items:center;justify-content:center;font-size:36px;position:relative}
-    .ct{position:absolute;top:7px;left:7px;font-size:7px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:2px 7px;border-radius:9px;color:#0D0D0D}
-    .cb{padding:11px}
-    .cn{font-size:14px;font-weight:800;margin-bottom:2px}
-    .cs{font-size:9px;color:#555;font-family:'Barlow',sans-serif;margin-bottom:8px}
-    .cf{display:flex;justify-content:space-between;align-items:center;padding-top:9px;border-top:1px solid #222}
-    .cp{font-size:19px;font-weight:900;color:var(--lime)}
-    .co{font-size:9px;color:#333;text-decoration:line-through;font-family:'Barlow',sans-serif}
-    .csp{font-size:8px;color:#555;font-family:'Barlow',sans-serif}
-    .steps{display:flex;flex-direction:column;gap:2px;margin-top:48px;max-width:580px}
-    .step{display:flex;gap:20px;align-items:flex-start;padding:22px;background:var(--card);border:1px solid var(--border);border-radius:16px;transition:border-color 0.2s}
-    .step:hover{border-color:#333}
-    .snum{width:38px;height:38px;border-radius:50%;background:rgba(200,245,81,0.1);border:1px solid rgba(200,245,81,0.2);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:900;color:var(--lime);flex-shrink:0}
-    .st{font-size:18px;font-weight:800;margin-bottom:4px}
-    .sd{font-size:12px;color:#555;font-family:'Barlow',sans-serif;line-height:1.6}
-    .features{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-top:48px}
-    .feat{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;transition:border-color 0.2s,transform 0.2s}
-    .feat:hover{border-color:#333;transform:translateY(-2px)}
-    .fi{font-size:26px;margin-bottom:12px}
-    .ft{font-size:17px;font-weight:800;margin-bottom:5px}
-    .fd{font-size:12px;color:#555;font-family:'Barlow',sans-serif;line-height:1.6;font-weight:300}
-    .studio-band{background:linear-gradient(135deg,#C8F551 0%,#A8D830 100%);border-radius:20px;padding:44px;margin:0 24px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap}
-    .sb-h2{font-size:clamp(30px,6vw,46px);font-weight:900;color:#0D0D0D;line-height:1;letter-spacing:-1px;margin-bottom:10px}
-    .sb-p{font-size:13px;color:#2a4a00;font-family:'Barlow',sans-serif;line-height:1.6;max-width:400px;margin-bottom:18px}
-    .sb-stats{display:flex;gap:24px;margin-bottom:20px}
-    .sb-sn{font-size:26px;font-weight:900;color:#0D0D0D}
-    .sb-sl{font-size:8px;color:#2a4a00;font-family:'Barlow',sans-serif;letter-spacing:1.5px;text-transform:uppercase}
-    .sb-btn{display:inline-block;background:#0D0D0D;color:var(--lime);font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:900;letter-spacing:2px;text-transform:uppercase;padding:12px 20px;border-radius:11px;border:none;cursor:pointer;transition:all 0.18s}
-    .sb-btn:hover{transform:scale(1.03)}
-    .testi{display:flex;flex-direction:column;gap:12px;margin-top:40px;max-width:560px}
-    .test{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px}
-    .test-t{font-size:13px;color:#aaa;font-family:'Barlow',sans-serif;line-height:1.7;margin-bottom:12px;font-style:italic}
-    .test-a{display:flex;align-items:center;gap:10px}
-    .test-av{width:30px;height:30px;border-radius:50%;background:#252525;display:flex;align-items:center;justify-content:center;font-size:14px}
-    .test-n{font-size:12px;font-weight:800}
-    .test-m{font-size:9px;color:#444;font-family:'Barlow',sans-serif}
-    .stars{color:var(--lime);font-size:11px;letter-spacing:1px;display:block;margin-bottom:10px}
-    .final{text-align:center;padding:100px 24px;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(200,245,81,0.05) 0%,transparent 70%)}
-    .final h2{font-size:clamp(48px,10vw,80px);font-weight:900;letter-spacing:-3px;line-height:0.95;margin-bottom:20px}
-    .final p{font-size:15px;color:#555;font-family:'Barlow',sans-serif;margin-bottom:36px}
-    .cform{display:flex;gap:8px;max-width:420px;margin:0 auto 14px}
-    .cform input{flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;font-size:14px;color:var(--text);font-family:'Barlow',sans-serif;outline:none;transition:border-color 0.2s}
-    .cform input:focus{border-color:var(--lime)}
-    .cform input::placeholder{color:#444}
-    .cform button{padding:14px 20px;border-radius:12px;border:none;cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:900;letter-spacing:2px;text-transform:uppercase;background:var(--lime);color:#0D0D0D;white-space:nowrap;transition:all 0.18s}
-    .cform button:hover{transform:scale(1.03)}
-    .csuccess{display:none;background:rgba(200,245,81,0.08);border:1px solid rgba(200,245,81,0.3);border-radius:12px;padding:14px 18px;max-width:420px;margin:0 auto;font-size:14px;font-family:'Barlow',sans-serif;color:var(--lime)}
-    .pnote{font-size:10px;color:#2a2a2a;font-family:'Barlow',sans-serif;margin-top:10px}
-    footer{padding:28px 24px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;font-size:10px;color:#333;font-family:'Barlow',sans-serif}
-    .flogo{font-size:16px;font-weight:900;letter-spacing:-0.5px}.flogo span{color:var(--lime)}
-    @media(max-width:600px){h1{letter-spacing:-2px}.wform,.cform{flex-direction:column}.studio-band{padding:28px 20px}section{padding:60px 20px}.sb-stats{gap:14px}}
-  </style>
-</head>
-<body>
+ROAM.
+FOR STUDIOS
+JOIN WAITLIST
 
-<nav>
-  <div class="logo">ROAM<span>.</span></div>
-  <div class="nav-links">
-    <button class="nav-btn" onclick="document.getElementById('studios').scrollIntoView({behavior:'smooth'})">For Studios</button>
-    <button class="nav-btn primary" onclick="document.getElementById('hf').focus();document.getElementById('hf').scrollIntoView({behavior:'smooth'})">Join Waitlist</button>
-  </div>
-</nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <div class="hero-content">
-    <div class="hero-badge">🚀 Launching Sydney 2025</div>
-    <h1>DROP<br/>INTO<br/><span class="accent">ANYTHING.</span></h1>
-    <p class="hero-sub">Last-minute fitness classes across Sydney at <strong>seriously reduced prices.</strong> Pilates, yoga, HIIT, boxing and more. No membership. No commitment.</p>
-    <div class="wform">
-      <input type="email" id="hf" placeholder="your@email.com" autocomplete="email"/>
-      <button onclick="signup('hf','.wform','hs')">Join the waitlist →</button>
-    </div>
-    <div class="wsuccess" id="hs">🎉 You're on the list! We'll notify you the moment Roam launches in Sydney.</div>
-    <div class="social-proof">
-      <div class="avatars">
-        <div class="av">🧘</div><div class="av">🔥</div><div class="av">🌿</div><div class="av">🥊</div><div class="av">🩰</div>
-      </div>
-      <span><strong id="ctr">847</strong> Sydney fitness lovers already signed up</span>
-    </div>
-  </div>
-</section>
+🚀 LAUNCHING SYDNEY 2025
+DROP INTO ANYTHING.
+Last-minute fitness classes across Sydney at seriously reduced prices. Pilates, yoga, HIIT, boxing and more. No membership. No commitment.
 
-<!-- CLASS CARDS -->
-<div class="cards-section">
-  <div style="padding:48px 24px 0"><div class="slabel">Available Now</div><div class="stitle" style="font-size:clamp(28px,5vw,40px)">Classes near you<span style="color:var(--lime)">.</span></div></div>
-  <div class="cards-row">
-    <div class="cc"><div class="ci" style="background:linear-gradient(135deg,#1a1a2e,#141420)">🧘<div class="ct" style="background:#C8F551">Pilates</div></div><div class="cb"><div class="cn">Reformer Pilates</div><div class="cs">Studio Forma · Bondi · 7:00 AM</div><div class="cf"><div><div class="cp">$18</div><div class="co">$38</div></div><div class="csp">🔴 2 left</div></div></div></div>
-    <div class="cc"><div class="ci" style="background:linear-gradient(135deg,#1a0a00,#110800)">🔥<div class="ct" style="background:#FF6B47">HIIT</div></div><div class="cb"><div class="cn">HIIT Power</div><div class="cs">Sweat Society · Surry Hills · 6:30 AM</div><div class="cf"><div><div class="cp">$14</div><div class="co">$32</div></div><div class="csp">🟢 3 left</div></div></div></div>
-    <div class="cc"><div class="ci" style="background:linear-gradient(135deg,#0a1a10,#081208)">🌿<div class="ct" style="background:#7DD4A8">Yoga</div></div><div class="cb"><div class="cn">Vinyasa Flow</div><div class="cs">Alma Yoga · Newtown · 9:00 AM</div><div class="cf"><div><div class="cp">$12</div><div class="co">$28</div></div><div class="csp">🟢 5 left</div></div></div></div>
-    <div class="cc"><div class="ci" style="background:linear-gradient(135deg,#1a0505,#110303)">🥊<div class="ct" style="background:#FFD166">Boxing</div></div><div class="cb"><div class="cn">Boxing Fundamentals</div><div class="cs">Corner Club · Alexandria · 12:00 PM</div><div class="cf"><div><div class="cp">$16</div><div class="co">$35</div></div><div class="csp">🟢 4 left</div></div></div></div>
-    <div class="cc"><div class="ci" style="background:linear-gradient(135deg,#1a0a15,#110810)">🩰<div class="ct" style="background:#FFB3C6">Barre</div></div><div class="cb"><div class="cn">Barre & Burn</div><div class="cs">Elevé Studio · Double Bay · 10:30 AM</div><div class="cf"><div><div class="cp">$20</div><div class="co">$42</div></div><div class="csp">🔴 2 left</div></div></div></div>
-    <div class="cc"><div class="ci" style="background:linear-gradient(135deg,#0a100a,#080c08)">✨<div class="ct" style="background:#93C5FD">Wellness</div></div><div class="cb"><div class="cn">Breathwork & Stretch</div><div class="cs">Still Space · Glebe · 8:00 AM</div><div class="cf"><div><div class="cp">$10</div><div class="co">$25</div></div><div class="csp">🟢 5 left</div></div></div></div>
-  </div>
-</div>
+JOIN THE WAITLIST →
+🧘🔥🌿🥊🩰
+847 Sydney fitness lovers already signed up
+AVAILABLE NOW
+Classes near you.
+🧘
+PILATES
+Reformer Pilates
+Studio Forma · Bondi · 7:00 AM
+$18
+$38
+🔴 2 left
+🔥
+HIIT
+HIIT Power
+Sweat Society · Surry Hills · 6:30 AM
+$14
+$32
+🟢 3 left
+🌿
+YOGA
+Vinyasa Flow
+Alma Yoga · Newtown · 9:00 AM
+$12
+$28
+🟢 5 left
+🥊
+BOXING
+Boxing Fundamentals
+Corner Club · Alexandria · 12:00 PM
+$16
+$35
+🟢 4 left
+🩰
+BARRE
+Barre & Burn
+Elevé Studio · Double Bay · 10:30 AM
+$20
+$42
+🔴 2 left
+✨
+WELLNESS
+Breathwork & Stretch
+Still Space · Glebe · 8:00 AM
+$10
+$25
+🟢 5 left
+HOW IT WORKS
+Three steps.
+Roam removes every barrier between you and a great fitness class.
+1
+Browse what's on near you
+Open the app and see last-minute spots available today across Pilates, yoga, HIIT, boxing, barre and wellness studios near your location. Every class is at a reduced Roam price.
+2
+Book in seconds, pay once
+Tap, pay, done. No tokens, no membership tiers. Your health profile is sent to the studio automatically — no forms to fill in on arrival.
+3
+Just show up
+Walk in, take the class, rate it after. Build a streak. Try studios you'd never have paid full price to discover. Roam is your Sydney fitness passport.
+WHY ROAM
+Built different.
+⚡
+Last-minute. Not last resort.
+Studios release spots hours before class. Roam surfaces them at prices that make it a no-brainer to just go.
+🏥
+Health profile, once.
+Fill in your health info on signup. It's automatically sent to every studio you book — no more clipboards on arrival.
+📍
+Location-first discovery.
+An interactive map shows every available class nearby. Filter by type, time, price and distance.
+🔓
+Zero commitment.
+No subscription. No tokens. No confusing credits. Pay for a class when you want one.
+🔥
+Built for consistency.
+Weekly streaks, booking history, quick rebook from your last class, and favourites make it easy to keep showing up.
+⭐
+Real reviews.
+Every rating is from a verified Roam booking. No fake reviews, no incentivised feedback.
+FOR STUDIO OWNERS
+Turn empty spots
+into revenue.
+Roam fills your last-minute availability without discounting your brand or changing how you work. You control which classes list, at what price, and when they go live.
+Zero
+SETUP WITH MINDBODY
+15%
+COMMISSION PER BOOKING
+Real-time
+ON/OFF CONTROL
+PARTNER WITH US →
+EARLY FEEDBACK
+What people say.
+★★★★★
+"I've been wanting to try Reformer Pilates for ages but couldn't justify paying full price for a studio I hadn't tried. Roam is exactly what I needed — I've been to three different studios in two weeks."
+🧘
+Mia T.
+Bondi Beach · Waitlist member
+★★★★★
+"As a studio owner the thing I hate most is seeing empty Reformers an hour before class. The idea that Roam fills those spots without me having to do anything is genuinely exciting."
+💼
+Sarah C.
+Studio owner · Paddington
+★★★★★
+"I travel for work and I've never been able to stick to a gym membership. Roam is built for how I actually live — I just find something good wherever I am that morning."
+🔥
+Jake R.
+Surry Hills · Waitlist member
+SYDNEY 2025
+Be first through the door.
+Waitlist members get first access, launch-day pricing, and a free first class on us.
 
-<!-- HOW IT WORKS -->
-<section>
-  <div class="slabel">How it works</div>
-  <div class="stitle">Three steps<span style="color:var(--lime)">.</span></div>
-  <div class="ssub">Roam removes every barrier between you and a great fitness class.</div>
-  <div class="steps">
-    <div class="step"><div class="snum">1</div><div><div class="st">Browse what's on near you</div><div class="sd">Open the app and see last-minute spots available today across Pilates, yoga, HIIT, boxing, barre and wellness studios near your location. Every class is at a reduced Roam price.</div></div></div>
-    <div class="step"><div class="snum">2</div><div><div class="st">Book in seconds, pay once</div><div class="sd">Tap, pay, done. No tokens, no membership tiers. Your health profile is sent to the studio automatically — no forms to fill in on arrival.</div></div></div>
-    <div class="step"><div class="snum">3</div><div><div class="st">Just show up</div><div class="sd">Walk in, take the class, rate it after. Build a streak. Try studios you'd never have paid full price to discover. Roam is your Sydney fitness passport.</div></div></div>
-  </div>
-</section>
-
-<!-- FEATURES -->
-<section style="background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
-  <div class="slabel">Why Roam</div>
-  <div class="stitle">Built different<span style="color:var(--lime)">.</span></div>
-  <div class="features">
-    <div class="feat"><div class="fi">⚡</div><div class="ft">Last-minute. Not last resort.</div><div class="fd">Studios release spots hours before class. Roam surfaces them at prices that make it a no-brainer to just go.</div></div>
-    <div class="feat"><div class="fi">🏥</div><div class="ft">Health profile, once.</div><div class="fd">Fill in your health info on signup. It's automatically sent to every studio you book — no more clipboards on arrival.</div></div>
-    <div class="feat"><div class="fi">📍</div><div class="ft">Location-first discovery.</div><div class="fd">An interactive map shows every available class nearby. Filter by type, time, price and distance.</div></div>
-    <div class="feat"><div class="fi">🔓</div><div class="ft">Zero commitment.</div><div class="fd">No subscription. No tokens. No confusing credits. Pay for a class when you want one.</div></div>
-    <div class="feat"><div class="fi">🔥</div><div class="ft">Built for consistency.</div><div class="fd">Weekly streaks, booking history, quick rebook from your last class, and favourites make it easy to keep showing up.</div></div>
-    <div class="feat"><div class="fi">⭐</div><div class="ft">Real reviews.</div><div class="fd">Every rating is from a verified Roam booking. No fake reviews, no incentivised feedback.</div></div>
-  </div>
-</section>
-
-<!-- STUDIO SECTION -->
-<section id="studios" style="padding:80px 0">
-  <div class="studio-band">
-    <div>
-      <div style="font-size:9px;font-weight:700;color:#2a4a00;letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;font-family:'Barlow',sans-serif">For Studio Owners</div>
-      <div class="sb-h2">Turn empty spots<br/>into revenue.</div>
-      <div class="sb-p">Roam fills your last-minute availability without discounting your brand or changing how you work. You control which classes list, at what price, and when they go live.</div>
-      <div class="sb-stats">
-        <div><div class="sb-sn">Zero</div><div class="sb-sl">setup with Mindbody</div></div>
-        <div><div class="sb-sn">15%</div><div class="sb-sl">commission per booking</div></div>
-        <div><div class="sb-sn">Real-time</div><div class="sb-sl">on/off control</div></div>
-      </div>
-      <a href="mailto:studios@roamfit.au" class="sb-btn">Partner with us →</a>
-    </div>
-  </div>
-</section>
-
-<!-- TESTIMONIALS -->
-<section>
-  <div class="slabel">Early feedback</div>
-  <div class="stitle">What people say<span style="color:var(--lime)">.</span></div>
-  <div class="testi">
-    <div class="test"><span class="stars">★★★★★</span><div class="test-t">"I've been wanting to try Reformer Pilates for ages but couldn't justify paying full price for a studio I hadn't tried. Roam is exactly what I needed — I've been to three different studios in two weeks."</div><div class="test-a"><div class="test-av">🧘</div><div><div class="test-n">Mia T.</div><div class="test-m">Bondi Beach · Waitlist member</div></div></div></div>
-    <div class="test"><span class="stars">★★★★★</span><div class="test-t">"As a studio owner the thing I hate most is seeing empty Reformers an hour before class. The idea that Roam fills those spots without me having to do anything is genuinely exciting."</div><div class="test-a"><div class="test-av">💼</div><div><div class="test-n">Sarah C.</div><div class="test-m">Studio owner · Paddington</div></div></div></div>
-    <div class="test"><span class="stars">★★★★★</span><div class="test-t">"I travel for work and I've never been able to stick to a gym membership. Roam is built for how I actually live — I just find something good wherever I am that morning."</div><div class="test-a"><div class="test-av">🔥</div><div><div class="test-n">Jake R.</div><div class="test-m">Surry Hills · Waitlist member</div></div></div></div>
-  </div>
-</section>
-
-<!-- FINAL CTA -->
-<div class="final">
-  <div class="slabel">Sydney 2025</div>
-  <h2>Be first<br/>through<br/><span style="color:var(--lime)">the door.</span></h2>
-  <p>Waitlist members get first access, launch-day pricing, and a free first class on us.</p>
-  <div class="cform">
-    <input type="email" id="cf" placeholder="your@email.com" autocomplete="email"/>
-    <button onclick="signup('cf','.cform','cs')">Join →</button>
-  </div>
-  <div class="csuccess" id="cs">🎉 You're in! We'll be in touch before launch.</div>
-  <div class="pnote">No spam. Unsubscribe anytime.</div>
-</div>
-
-<footer>
-  <div class="flogo">ROAM<span>.</span></div>
-  <div>Sydney, Australia · 2025</div>
-  <div style="display:flex;gap:16px">
-    <a href="mailto:hello@roamfit.au" style="color:#333;transition:color 0.2s" onmouseover="this.style.color='#C8F551'" onmouseout="this.style.color='#333'">hello@roamfit.au</a>
-    <a href="mailto:studios@roamfit.au" style="color:#333;transition:color 0.2s" onmouseover="this.style.color='#C8F551'" onmouseout="this.style.color='#333'">For studios</a>
-  </div>
-</footer>
-
-<script>
-  // Animate counter
-  const ctrEl = document.getElementById('ctr');
-  const obs2 = new IntersectionObserver(entries => {
-    if(!entries[0].isIntersecting) return;
-    let n = 780;
-    const go = () => { n = Math.min(n + Math.ceil((847-n)/8), 847); ctrEl.textContent = n.toLocaleString(); if(n<847) requestAnimationFrame(go); };
-    requestAnimationFrame(go);
-    obs2.disconnect();
-  });
-  obs2.observe(document.querySelector('.social-proof'));
-
-  // Waitlist signup
-  function signup(inputId, formSel, successId) {
-    const input = document.getElementById(inputId);
-    const email = input.value.trim();
-    if(!email || !email.includes('@')) {
-      input.style.borderColor = '#FF6B47';
-      setTimeout(() => input.style.borderColor = '', 1500);
-      return;
-    }
-    document.querySelector(formSel).style.display = 'none';
-    document.getElementById(successId).style.display = 'block';
-    // TODO: wire to Supabase
-    // fetch('/api/waitlist', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({email, ts: new Date().toISOString()}) });
-    console.log('Signup:', email);
-  }
-
-  document.getElementById('hf').addEventListener('keydown', e => { if(e.key==='Enter') signup('hf','.wform','hs'); });
-  document.getElementById('cf').addEventListener('keydown',  e => { if(e.key==='Enter') signup('cf','.cform','cs'); });
-
-  // Scroll fade-in
-  const fadeObs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if(e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; } });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.step,.feat,.test,.cc').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(18px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    fadeObs.observe(el);
-  });
-</script>
-</body>
-</html>
+JOIN →
+No spam. Unsubscribe anytime.
+ROAM.
+Sydney, Australia · 2025
+hello@roamfit.au
+For studios
